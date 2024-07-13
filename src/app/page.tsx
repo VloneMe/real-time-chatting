@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button"
+import Dashboard from "@/components/Dashboard"
 
 export default function Home() {
   return (
-    <div>
-      <Button>Click me</Button>
-    </div>
+    <main className="min-h-screen max-w-7xl mx-auto flex flex-col items-center">
+      <Dashboard />
+    </main>
   )
 };
