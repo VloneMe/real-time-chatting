@@ -17,6 +17,8 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { useState } from "react";
 import Link from "next/link";
+import { Separator } from "../ui/separator";
+import { signIn } from "next-auth/react";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -99,6 +101,24 @@ export const SignIn = () => {
                 Login
               </Button>
             </form>
+
+            <div className="space-y-5 w-full mt-5">
+            <div className="flex items-center gap-5">
+              <Separator />
+              {/* OR <Separator /> */}
+            </div>
+            <div className="flex gap-5 w-full">
+              <Button
+                onClick={() => signIn("google")}
+                className="bg-transparent hover:text-white border-black border text-black w-full"
+              >
+                Sign in with Google
+              </Button>
+              <Button onClick={() => signIn("github")} className="w-full">
+                Sign in with Github
+              </Button>
+            </div>
+          </div>
           </Form>
         </CardContent>  
 

@@ -4,7 +4,7 @@ import "./globals.css";
 import { Inter as FontSans } from "next/font/google"
  
 import { cn } from "@/lib/utils"
-import SessionWrapper from "../components/SessionWraper";
+import SessionWrapper from "../context/SessionWraper";
  
 const fontSans = FontSans({
   subsets: ["latin"],
