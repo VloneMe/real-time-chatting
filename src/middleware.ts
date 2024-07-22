@@ -1,15 +1,16 @@
 import { NextResponse } from 'next/server';  
 import { jwtVerify } from 'jose';  
-import { NextRequestWithUser } from './types/next'; // Make sure the path matches your structure  
+import { NextRequestWithUser } from './types/next';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "your-secret-key");  
 
 export async function middleware(req: NextRequestWithUser) {  
-    const token = req.headers.get('Authorization');  
+    const token = req.headers.get('Authorization');
 
     if (!token) {  
-        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });  
-    }  
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+
+    }
 
     try {  
         const { payload } = await jwtVerify(token, JWT_SECRET);  
@@ -19,10 +20,10 @@ export async function middleware(req: NextRequestWithUser) {
         return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });  
     }  
 
-    return NextResponse.next();  
+    return NextResponse.next();
 }  
 
  
 export const config = {  
-    matcher: ['/api/users/', '/api/chats/', '/api/messages/'],  
+    matcher: ['/api/users/:path*', '/api/chats/:path*', '/api/messages/:path*'],  
 };

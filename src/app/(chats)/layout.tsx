@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.scss";
+import "../globals.scss";
 
 import { Inter as FontSans } from "next/font/google"
  
@@ -26,7 +26,7 @@ export default function RootLayout({
       <html lang="en">
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
+            "min-h-screen bg-background font-sans antialiased bg-gray-400",
             fontSans.variable
           )}
         >

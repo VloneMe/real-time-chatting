@@ -1,8 +1,8 @@
 "use client"
 import React, { useContext } from 'react'
 import { Container } from './Container'
-import { Button } from './ui/button';
 import { useAuth } from '@/context/AuthContext';
+import { Button } from './ui/button';
 
 export const Dashboard = () => {
   const { user, login, logout } = useAuth();
@@ -10,18 +10,16 @@ export const Dashboard = () => {
   console.log("My data: ", user);
   
   return (
-    <section>
-      <Container>
-        <div>  
-            {user ? (  
-                <div>  
-                    <p className='text-7xl font-bold'>{user.fname}</p>
-                </div>  
-            ) : (  
-              <p className='text-7xl font-bold'>LogOut</p>
-            )}  
+    <section className='w-full h-screen p-8'>
+      <Container className='h-full items-center gap-10 flex'>
+        <div className='h-full w-3/12 bg-black rounded-xl'>  
+           sidebar
         </div> 
+
+        <div className='w-full h-full flex-1 bg-white rounded-xl'>
+          Message Area <Button onClick={() => logout()}>Click Me</Button>
+        </div>
       </Container>
     </section>
   )
-}
+};
