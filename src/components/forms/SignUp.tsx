@@ -51,7 +51,7 @@ export const SignUp = () => {
     const { fname, username, email, password } = values;
 
     try {
-      const res = await fetch("/api/register", {
+      const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export const SignUp = () => {
         }),
       });
 
-      if (res.status === 200) {
+      if (res.ok) {
         router.push("/signin");
       }
     } catch (error) {

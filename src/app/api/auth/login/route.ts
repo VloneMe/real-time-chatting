@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "Error validating password" }, { status: 500 });  
         }  
 
-        const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: "1h" });  
+        const token = jwt.sign({ userId: user._id, username: user.username, fname: user.fname, email: user.email }, JWT_SECRET, { expiresIn: "1h" });  
 
         return NextResponse.json({ message: "Login successful", token }, { status: 200 });  
     } catch (error) {  

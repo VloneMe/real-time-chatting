@@ -4,7 +4,7 @@ import "./globals.scss";
 import { Inter as FontSans } from "next/font/google"
  
 import { cn } from "@/lib/utils"
-// import SessionWrapper from "../context/SessionWraper";
+import { AuthProvider } from "@/context/AuthContext";
  
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -12,7 +12,7 @@ const fontSans = FontSans({
 })
 
 export const metadata: Metadata = {
-  title: "Real Time Chat",
+  title: "Real Time Chatting App",
   description: "A real time chatting application.",
 };
 
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <SessionWrapper>
+    <AuthProvider>
       <html lang="en">
         <body
           className={cn(
@@ -33,6 +33,6 @@ export default function RootLayout({
           {children}
         </body>
       </html>
-    // {/* </SessionWrapper> */}
+    </AuthProvider>
   );
 }
