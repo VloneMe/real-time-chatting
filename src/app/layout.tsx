@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "./globals.scss";
 
 import { Inter as FontSans } from "next/font/google"
  
 import { cn } from "@/lib/utils"
-import SessionWrapper from "../context/SessionWraper";
+// import SessionWrapper from "../context/SessionWraper";
  
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SessionWrapper>
+    // <SessionWrapper>
       <html lang="en">
         <body
           className={cn(
@@ -33,6 +33,6 @@ export default function RootLayout({
           {children}
         </body>
       </html>
-    </SessionWrapper>
+    // {/* </SessionWrapper> */}
   );
 }

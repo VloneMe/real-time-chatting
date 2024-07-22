@@ -1,8 +1,9 @@
 "use client"
 
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Button } from "./ui/button";
+// import { Button } from "./ui/button";
 import Image from "next/image";
+import { Button } from "@material-tailwind/react";
 
 export default function Dashboard() {
   const { data: session } = useSession();
@@ -24,6 +25,7 @@ export default function Dashboard() {
           <div className="flex gap-5">
             <Button onClick={() => signIn("google")} className="outline bg-transparent border-black border text-black">Sign in with Google</Button>
             <Button onClick={() => signIn("github")} className="">Sign in with Github</Button>
+
           </div>
         </div>
       )}

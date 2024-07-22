@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,10 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Separator } from "../ui/separator";
-import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -31,6 +31,8 @@ const formSchema = z.object({
 
 export const SignIn = () => {
   const [hidePWD, setHidePWD] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,8 +42,20 @@ export const SignIn = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const { email, password } = values;
+
+    // const res = await signIn("credentials", {
+    //   redirect: false,
+    //   email,
+    //   password,
+    // });
+
+    // if (res?.error) {
+    //   setErrorMessage("Invalid email or password. Please try again.");
+    // } else {
+    //   setErrorMessage("");
+    // }
   };
 
   return (
@@ -49,12 +63,15 @@ export const SignIn = () => {
       <Card className="lg:w-5/12 mx-auto p-10">
         <CardHeader className="text-center">
           <h1 className="text-2xl font-mono font-bold tracking-wide">
-            SignIn To Chatting App
+            Sign In To Chatting App
           </h1>
         </CardHeader>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              {errorMessage && (
+                <div className="text-red-500 text-center">{errorMessage}</div>
+              )}
               <FormField
                 control={form.control}
                 name="email"
@@ -62,40 +79,40 @@ export const SignIn = () => {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="Email Or Usernme" {...field} />
+                      <Input type="email" placeholder="Email Or Username" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-            <div className="flex flex-col space-y-2">
+              <div className="flex flex-col space-y-2">
                 <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Password</FormLabel>
-                        <FormControl className="relative">
-                          <div className="flex relative">
-                              <Input
-                              type={!hidePWD ? "password" : "text"}
-                              placeholder="Password"
-                              {...field}
-                              />
-                              <div
-                              onClick={() => setHidePWD(!hidePWD)}
-                              className="h-full flex absolute items-center right-3 opacity-40 cursor-pointer"
-                              >
-                                {!hidePWD ? <FaEye /> : <FaEyeSlash />}
-                              </div>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl className="relative">
+                        <div className="flex relative">
+                          <Input
+                            type={!hidePWD ? "password" : "text"}
+                            placeholder="Password"
+                            {...field}
+                          />
+                          <div
+                            onClick={() => setHidePWD(!hidePWD)}
+                            className="h-full flex absolute items-center right-3 opacity-40 cursor-pointer"
+                          >
+                            {!hidePWD ? <FaEye /> : <FaEyeSlash />}
                           </div>
-                        </FormControl>
-                        <FormMessage />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
                     </FormItem>
-                    )}
+                  )}
                 />
-            </div>
+              </div>
 
               <Button type="submit" className="w-full">
                 Login
@@ -103,29 +120,28 @@ export const SignIn = () => {
             </form>
 
             <div className="space-y-5 w-full mt-5">
-            <div className="flex items-center gap-5">
-              <Separator />
-              {/* OR <Separator /> */}
+              <div className="flex items-center gap-5">
+                <Separator />
+                {/* OR <Separator /> */}
+              </div>
+              <div className="flex gap-5 w-full">
+                <Button
+                  className="bg-transparent hover:text-white border-black border text-black w-full"
+                >
+                  Sign in with Google
+                </Button>
+                <Button className="w-full">
+                  Sign in with Github
+                </Button>
+              </div>
             </div>
-            <div className="flex gap-5 w-full">
-              <Button
-                onClick={() => signIn("google")}
-                className="bg-transparent hover:text-white border-black border text-black w-full"
-              >
-                Sign in with Google
-              </Button>
-              <Button onClick={() => signIn("github")} className="w-full">
-                Sign in with Github
-              </Button>
-            </div>
-          </div>
           </Form>
         </CardContent>  
 
         <CardFooter className="flex gap-2 font-mono justify-center">
           <p>I don't have an account,</p>
           <Link href={"signup"} className="text-blue-500 hover:underline">
-            Sign In
+            Sign Up
           </Link>
           <span>here?</span>
         </CardFooter>
