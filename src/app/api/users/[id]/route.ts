@@ -16,13 +16,13 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
             return NextResponse.json({ message: "User ID is required" }, { status: 400 });  
         }  
 
-        const user = await User.findById(id);  
+        const user = await User.findById(id).select('-password');  
 
         if (!user) {  
             return NextResponse.json({ message: "User not found" }, { status: 404 });  
         }  
 
-        return NextResponse.json({ user }, { status: 200 });  
+        return NextResponse.json(user , { status: 200 });  
     } catch (error: unknown) {  
         if (error instanceof Error) {  
             console.error("Error fetching user:", error.message);  

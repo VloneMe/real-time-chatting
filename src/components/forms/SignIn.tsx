@@ -81,7 +81,8 @@ export const SignIn = () => {
       const decodedToken: User = jwtDecode(data.token); 
 
       // Set user data in Context  
-      login(decodedToken);   
+      login(decodedToken);
+      localStorage.setItem('token', data.token);   
 
       // Redirect or perform any other action  
       router.push("/");  

@@ -1,38 +1,21 @@
-import type { Metadata } from "next";
-import "../globals.scss";
+import { useAuth } from '@/context/AuthContext';
+import { ChatContextProvider } from '@/context/ChatContext';
+import React, { ReactNode } from 'react';
 
-import { Inter as FontSans } from "next/font/google"
- 
-import { cn } from "@/lib/utils"
-import { AuthProvider } from "@/context/AuthContext";
- 
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-})
 
-export const metadata: Metadata = {
-  title: "Real Time Chatting App",
-  description: "A real time chatting application.",
+interface Props {
+  children: ReactNode
+}
+
+const ChatLayout = ({ children }: Props) => {
+
+  const user = {userId: "669b99266bae3a721ac9af4e"};
+
+  return (
+    <ChatContextProvider user={user}>
+        { children }
+    </ChatContextProvider>
+  );
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <AuthProvider>
-      <html lang="en">
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased bg-gray-400",
-            fontSans.variable
-          )}
-        >
-          {children}
-        </body>
-      </html>
-    </AuthProvider>
-  );
-}
+export default ChatLayout;

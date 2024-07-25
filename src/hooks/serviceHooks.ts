@@ -1,24 +1,46 @@
-export const postRequest = async (url: string) => {
-  
-    const res = await fetch(url, {
+export const postData = async (url: string, body: any) => {
+    try {
+        const token = localStorage.getItem('token');
+      const res = await fetch(url, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": `${token}`, 
         },
-        // body: JSON.stringify()
-    });
-
-    const data = await res.json();
-
-    if (!res.ok){
-        let message;
-
-        if (data?.message){
-            message = data.message;
-        } else {
-            message = data;
-        }
-
-        return { Error: true, message}
+        body: JSON.stringify(body),
+      });
+  
+      const data = await res.json();
+  
+      if (!res.ok) {
+        const message = data?.message || data;
+        return { error: true, message };
+      }
+  
+      return data;
+    } catch (error: any) {
+      return { error: true, message: error.message };
     }
-};
+  };
+  
+  export const fetchData = async (url: string) => {
+    try {
+        const token = localStorage.getItem('token');
+      const res = await fetch(url, {
+        headers: {
+          "Authorization": `${token}`,  
+        },
+      });
+  
+      const data = await res.json();
+  
+      if (!res.ok) {
+        const message = data?.message || data;
+        return { error: true, message };
+      }
+  
+      return data;
+    } catch (error: any) {
+      return { error: true, message: error.message };
+    }
+  };
