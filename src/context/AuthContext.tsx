@@ -22,13 +22,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const login = (userData: User) => {
         setUser(userData);
         localStorage.setItem('user', JSON.stringify(userData));
-        console.log('User logged in:', userData); // Debugging log
+        // console.log('User logged in:', userData); // Debugging log
     };
 
     const logout = () => {
         setUser(null);
         localStorage.removeItem('user');
-        console.log('User logged out'); // Debugging log
+        // console.log('User logged out'); // Debugging log
     };
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (storedUser) {
             const parsedUser = JSON.parse(storedUser);
             setUser(parsedUser);
-            console.log('User retrieved from localStorage:', parsedUser); // Debugging log
+            // console.log('User retrieved from localStorage:', parsedUser); // Debugging log
         } else {
             console.log('No user found in localStorage'); // Debugging log
         }

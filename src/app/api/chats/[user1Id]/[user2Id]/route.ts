@@ -20,4 +20,4 @@ export async function GET(req: NextRequest, { params }: { params: { user1Id: str
         console.error("Error fetching chats:", error);  
         return NextResponse.json({ success: false, error: "An error occurred while fetching chats" }, { status: 500 });  
     }  
-}
+} 

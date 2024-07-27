@@ -1,17 +1,15 @@
-// hooks/useChats.ts  
-import { useEffect, useState } from 'react';  
+ import { useEffect, useState } from 'react';  
 import { useAuth } from '@/context/AuthContext';  
 
 export const useChats = () => {  
   const [chats, setChats] = useState<any[]>([]);
-  console.log("Chats: ", chats)
   const [recipientIds, setRecipientIds] = useState<string[]>([]);  
   const [error, setError] = useState<string | null>(null);  
   const [loading, setLoading] = useState(true);  
   const { user } = useAuth();  
-  const token = localStorage.getItem('token');  
+  const token = localStorage.getItem('token');
 
-  console.log()
+  // console.log("My Chats: ", chats)
 
   // Fetch chats  
   useEffect(() => {  
@@ -28,7 +26,7 @@ export const useChats = () => {
         }  
 
         const data = await res.json();  
-        setChats(data.data);  
+        setChats(data.data);
       } catch (err) {  
         setError(err instanceof Error ? err.message : 'An error occurred');  
       } finally {  
@@ -43,7 +41,8 @@ export const useChats = () => {
 
   // Update recipientIds whenever chats or userId changes  
   useEffect(() => {  
-    const nonMatchingIds = chats.flatMap((item: any) =>  
+    const nonMatchingIds = chats.flatMap((item: any) => 
+       
       item.members.filter((memberId: string) => memberId !== user?.userId)  
     );  
 
@@ -76,5 +75,5 @@ export const useChats = () => {
     return recipientData;  
   };  
 
-  return { chats, recipientIds, loading, error, getRecipients };  
+  return { chats, setChats, recipientIds, loading, error, getRecipients };  
 };

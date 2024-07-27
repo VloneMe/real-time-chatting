@@ -4,8 +4,6 @@ import { Container } from './Container'
 import { useAuth } from '@/context/AuthContext';
 import { Button } from './ui/button';
 import { useContext } from 'react';
-import { ChatContext } from '@/context/ChatContext';
-import { SideBar } from './chats/sidebar';
 import { UserChat } from './chats/UserChat';
 import { useChats } from '@/hooks/useChats';
 import { SignIn } from './forms/SignIn';
@@ -21,7 +19,7 @@ export const Dashboard = () => {
   return (
     <section className='w-full h-screen p-8'>
       <Container className='h-full items-center flex'>
-        <div className='h-full w-4/12 bg-black rounded-tl-xl rounded-bl-xl text-white'>  
+        <div className='h-full w-4/12 bg-black rounded-tl-xl rounded-bl-xl text-white overflow-hidden pb-5'>  
            <UserChat recipientIds={recipientIds}/>
         </div> 
 

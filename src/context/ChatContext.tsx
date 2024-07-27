@@ -1,6 +1,9 @@
 "use client"
 
-import { fetchData } from '@/hooks/serviceHooks';
+import { serviceHooks } from '@/hooks/serviceHooks';
+
+const { postData, fetchData } = serviceHooks();
+
 import { createContext, useState, ReactNode, useEffect } from 'react';
 
 interface Chat {

@@ -1,6 +1,11 @@
-export const postData = async (url: string, body: any) => {
+"use client"
+
+export const serviceHooks = () => {
+
+  const token = localStorage.getItem('token');
+  
+  const postData = async (url: string, body: any) => {
     try {
-        const token = localStorage.getItem('token');
       const res = await fetch(url, {
         method: "POST",
         headers: {
@@ -23,9 +28,8 @@ export const postData = async (url: string, body: any) => {
     }
   };
   
-  export const fetchData = async (url: string) => {
+  const fetchData = async (url: string) => {
     try {
-        const token = localStorage.getItem('token');
       const res = await fetch(url, {
         headers: {
           "Authorization": `${token}`,  
@@ -44,3 +48,6 @@ export const postData = async (url: string, body: any) => {
       return { error: true, message: error.message };
     }
   };
+
+  return { postData, fetchData}
+}
