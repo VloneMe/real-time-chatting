@@ -9,6 +9,7 @@ import { useChats } from '@/hooks/useChats';
 import { SignIn } from './forms/SignIn';
 import { Navbar } from './chats/Navbar';
 import { Footer } from './chats/Footer';
+import { ChatBox } from './chats/ChatBox';
 
 export const Dashboard = () => {
   const { user, login, logout } = useAuth();
@@ -24,8 +25,8 @@ export const Dashboard = () => {
         </div> 
 
         <div className='w-full h-full flex-1 bg-white rounded-tr-xl rounded-br-xl shadow-2xl border-2 border-black relative'>
-          <Navbar />
-          Message Area 
+          {/* <Navbar /> */}
+            <ChatBox />
           <Footer />
         </div>
       </Container>

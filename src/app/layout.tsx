@@ -5,6 +5,7 @@ import { Inter as FontSans } from "next/font/google"
  
 import { cn } from "@/lib/utils"
 import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { RecipientProvider } from "@/context/RecipientProvider";
  
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -24,7 +25,7 @@ export default function RootLayout({
   
   return (
     <AuthProvider>
-      {/* <ChatContextProvider> */}
+      <RecipientProvider>
         <html lang="en">
           <body
             className={cn(
@@ -35,7 +36,7 @@ export default function RootLayout({
             {children}
           </body>
         </html>
-      {/* </ChatContextProvider> */}
+      </RecipientProvider>
     </AuthProvider>
   );
 }

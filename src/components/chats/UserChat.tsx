@@ -7,17 +7,18 @@ import { useChats } from '../../hooks/useChats';
 // Define a type for the recipient  
 interface Recipient {  
     _id: string;  
-    fname: string;  
+    fname: string;
+    username: string;  
 }  
 
 interface UserChatProps {  
     recipientIds: string[];  
 }  
 
-export const UserChat: React.FC<UserChatProps> = ({ recipientIds }) => {  
+export const UserChat: React.FC<UserChatProps> = () => {  
     const { user } = useAuth();  
-    const { chats } = useChats();  
-    const { recipientUsers, updateCurrentChat, loading, error } = useRecipientUser(recipientIds);  
+    const { chats, recipientUser } = useChats();  
+    const { recipientUsers, updateCurrentChat, loading, error } = useRecipientUser();  
 
     if (loading) {  
         return <div>Loading user data...</div>;
@@ -28,14 +29,13 @@ export const UserChat: React.FC<UserChatProps> = ({ recipientIds }) => {
     }  
 
     const handleChatUpdate = (recipient: Recipient) => {  
-        console.log("Selected recipient:", recipient);  
+        console.log("Selected recipient:", recipient);
+        // setRecipientUser(recipient);
 
         // Checks if the recipient ID is present in any chat members  
         const chatFound = chats.find(chat => chat.members.includes(recipient._id));
 
-        if (chatFound) {  
-            // Get the corresponding chat details here directly  
-            // console.log("Chat Info:", chatFound);
+        if (chatFound) {
             updateCurrentChat(chatFound);  
         } else {  
             console.info("Creating new chat because recipient ID not found in existing chats:", recipient._id);  
@@ -55,7 +55,9 @@ export const UserChat: React.FC<UserChatProps> = ({ recipientIds }) => {
                 <p>No users found.</p>  
             ) : (  
                 recipientUsers.map((recipient: Recipient) => (   
-                    <div key={recipient._id} role='button' onClick={() => handleChatUpdate(recipient)} className='my-5'>  
+                    <div key={recipient._id} role='button' onClick={() => {
+                        handleChatUpdate(recipient), setRecipientUser(recipient)
+                    }} className='my-5 hover:bg-white/10 px-2 pt-2 rounded-xl'>  
                         <div className='border-b pb-2 flex gap-2'>  
                             <span className='bg-green-700 size-3 p-1 rounded-full mt-2'></span>  
                             <div className='flex items-center justify-between w-full'>  

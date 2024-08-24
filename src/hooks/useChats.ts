@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';  
 import { useAuth } from '@/context/AuthContext';
 import { useRecipientUser } from './useRecipientUser';
+import { Console } from 'console';
 
 interface Chat {  
   members: string[];  
@@ -13,7 +14,13 @@ export const useChats = () => {
   const [error, setError] = useState<string | null>(null);  
   const [loading, setLoading] = useState(true);  
   const { user } = useAuth();
-  const token = localStorage.getItem('token'); 
+  const token = localStorage.getItem('token');
+
+  const [recipientUser, setRecipientUser] = useState<any>()
+   
+  console.log("get recipients: ", recipientUser)
+  
+  // console.log("recipient ids:", recipientIds); 
   
 
   // Fetch chats  
@@ -63,7 +70,8 @@ export const useChats = () => {
         if (!res.ok) {  
           throw new Error(`Failed to fetch recipient with ID ${recipientId}`);  
         }  
-        const data = await res.json();  
+        const data = await res.json();
+        setRecipientUser(data) 
         recipientData.push(data);  
       } catch (err) {  
         setError(err instanceof Error ? err.message : 'An error occurred while fetching a recipient');  
@@ -73,5 +81,9 @@ export const useChats = () => {
     return recipientData;  
   };  
 
-  return { chats, setChats, recipientIds, loading, error, getRecipients };  
+  useEffect(() => {
+    getRecipients()
+  }, [setRecipientUser])
+
+  return { chats, setChats, recipientUser, recipientIds, loading, error, getRecipients };  
 };

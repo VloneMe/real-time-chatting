@@ -10,14 +10,13 @@ interface User {
 }  
 
 interface Message {  
-  // Define the properties of a message as per your application requirements  
   _id: string;  
   senderId: string;
   text: string;  
   timestamp: string;  
 }  
 
-export const useRecipientUser = (recipientIds: string[]) => {  
+export const useRecipientUser = () => {  
   const [recipientUsers, setRecipientUsers] = useState<User[]>([]);   
   const [currentChat, setCurrentChat] = useState<any>(null);   
   const [messages, setMessages] = useState<Message[]>([]);  
@@ -26,7 +25,7 @@ export const useRecipientUser = (recipientIds: string[]) => {
   const [error, setError] = useState<string | null>(null);  
   const [potentialChats, setPotentialChats] = useState<User[]>([]);  
   const { user } = useAuth();  
-  const { chats, setChats } = useChats();  
+  const { chats, setChats, recipientIds } = useChats();  
   
   const token = localStorage.getItem('token'); 
   
@@ -143,7 +142,8 @@ export const useRecipientUser = (recipientIds: string[]) => {
   }, [recipientIds, token]);   
 
   return {   
-    recipientUsers,   
+    recipientUsers,
+    currentChat,   
     updateCurrentChat,   
     potentialChats,   
     createChat,   
